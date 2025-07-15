@@ -1,0 +1,63 @@
+<div class="tabs" data-tabs>
+  <div class="tabs__list" role="tablist">
+    <button type="button" class="tabs__button tabs__button--active" data-tab-target="panel-description" aria-selected="true">
+      Description
+    </button>
+    <button type="button" class="tabs__button" data-tab-target="panel-details" aria-selected="false">
+      Details
+    </button>
+    <button type="button" class="tabs__button" data-tab-target="panel-delivery" aria-selected="false">
+      Delivery &amp; Returns
+    </button>
+  </div>
+  <div class="tabs__panels">
+    <div class="tabs__panel" id="panel-description" data-tab-content>
+      {{ product.description }}
+    </div>
+    <div class="tabs__panel" id="panel-details" data-tab-content hidden>
+      <div id="variant-metafields">
+        <ul>
+          <li><strong>Metal:</strong> <span data-metafield="metal"></span></li>
+          <li><strong>Average Weight:</strong> <span data-metafield="average_weight"></span><span>g</span></li>
+          <li><strong>Maximum Ring Width:</strong> <span data-metafield="maximum_ring_width"></span><span>mm</span></li>
+          <li><strong>Gemstone:</strong> <span data-metafield="gemstone"></span></li>
+          <li><strong>Size:</strong> <span data-metafield="size"></span><span>mm</span></li>
+        </ul>
+<div id="variant-sku-row" style="margin-top:10px;">
+      <strong>SKU:</strong> <span id="variant-sku"></span>
+    </div>
+      </div>
+    </div>
+    <div class="tabs__panel" id="panel-delivery" data-tab-content hidden>
+      Worldwide shipping <br>
+VARVAR company is able to send your order to almost any country in the world (except countries that do not accept parcels from abroad, countries unrecognized by the world community, territories in which hostilities are being conducted, and hot spots).
+<br>
+At the moment, we have sent orders to more than 70 countries and to thousands of customers around the world. Delivery around the world is carried out using air travel.
+
+Delivery<br>
+We have two options for worldwide shipping: a standard one and FedEx Express
+<br>
+Standard shipping – the list of countries and price for shipping:
+<br>
+Shipping to the USA takes from 7 to 15 days. The shipping cost is $7.00.
+<br>
+Delivery to the countries of the European Union is carried out within 5-10 days. We ship to Europe via Landmark Global with the DDP (Delivered Duty Paid) or via TNT.
+    </div>
+  </div>
+</div>
+
+<script id="product-variants-metafields" type="application/json">
+  [
+    {% for v in product.variants %}
+      {
+        "id": {{ v.id }},
+        "metal": {{ v.metafields.custom.metal | json }},
+        "average_weight": {{ v.metafields.custom.average_weight | json }},
+        "maximum_ring_width": {{ v.metafields.custom.maximum_ring_width | json }},
+        "gemstone": {{ v.metafields.custom.gemstone | json }},
+        "size": {{ v.metafields.custom.size | json }},
+        "sku": {{ v.sku | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+</script>

@@ -1,0 +1,9 @@
+{% if settings.sizing_chart_image != blank %}
+  <div class="sizing-chart-container">
+    <button type="button" class="sizing-chart-toggle">Sizing Chart</button>
+    <div class="sizing-chart-popup" aria-hidden="true">
+      <button type="button" class="sizing-chart-close" aria-label="Close">&times;</button>
+      <img src="{{ settings.sizing_chart_image | img_url: 'master' }}" alt="Sizing Chart">
+    </div>
+  </div>
+{% endif %}

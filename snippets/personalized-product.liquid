@@ -1,0 +1,50 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var toggle = document.getElementById('personalizationToggle');
+  var block = document.getElementById('personalizationFieldset');
+  var customField = document.querySelector('#personalizationFieldset input.product-information--line-item--text');
+  var productPriceElement = document.querySelector('.product-price-container .amount');
+  var originalPrice = parseFloat(productPriceElement.innerText.replace('$', '').replace(/,/g, '')); // Зберігаємо оригінальну ціну при завантаженні сторінки
+
+  function updatePrice() {
+    if (toggle.checked && customField.value.trim() !== "") {
+      var newPrice = originalPrice + 16; // Використовуємо оригінальну ціну як базову
+      productPriceElement.innerText = '$' + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      productPriceElement.innerText = '$' + originalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
+
+  toggle.addEventListener('change', function() {
+    if (this.checked) {
+      block.style.display = 'block';
+    } else {
+      block.style.display = 'none';
+    }
+    updatePrice();
+  });
+
+  customField.addEventListener('input', function() {
+    updatePrice();
+  });
+
+  // Якщо у вас є вибір варіантів, додайте цей код
+  var productVariantSelect = document.querySelector('select[name="id"]');
+  if (productVariantSelect) {
+    productVariantSelect.addEventListener('change', function() {
+      originalPrice = parseFloat(productPriceElement.innerText.replace('$', '').replace(/,/g, '')); // Оновлюємо оригінальну ціну при зміні варіанту
+      updatePrice();
+    });
+  }
+});
+var addToCartButton = document.querySelector('button[name="add"]');
+var personalizationToggle = document.getElementById('personalizationToggle');
+
+addToCartButton.addEventListener('click', function() {
+  if (personalizationToggle && personalizationToggle.checked) {
+    var cart = new Cart();
+    const productIdForEngraving = '8685213614354'; // замініть на ID товару "Гравіювання"
+    cart.updateQuantity(null, 1, productIdForEngraving);
+  }
+});
+</script>

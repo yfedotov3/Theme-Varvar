@@ -1,0 +1,53 @@
+ <script>
+// Функція для додавання посилання
+function addGuideSizeLink() {
+    var optionContainer = document.querySelector('.tpo_option-container.tpo_flex-50');
+
+    if (optionContainer && !document.getElementById('guideSizeLink')) {
+        var guideSizeLink = document.createElement('a');
+        guideSizeLink.href = "#";
+        guideSizeLink.id = "guideSizeLink";
+        guideSizeLink.innerText = "📏Size grid";
+        guideSizeLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            // Відкрити розмірну сітку тут
+            modal.style.display = "block"; // Додано
+        });
+
+        // Вставляємо посилання всередину блоку з класом "tpo_option-container tpo_flex-75"
+        optionContainer.appendChild(guideSizeLink);
+    }
+}
+
+// Створюємо спостерігача
+var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.addedNodes.length) {
+            addGuideSizeLink();
+        }
+    });
+});
+
+// Починаємо спостереження за змінами в DOM
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+
+// Викликаємо функцію відразу, на випадок, якщо елемент вже на сторінці
+addGuideSizeLink();
+
+// Додано: Код для модального вікна
+var modal = document.getElementById("sizeGridModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
